@@ -1,0 +1,3 @@
+[submodule "yazi/plugins/auto-layout.yazi"]
+	path = yazi/plugins/auto-layout.yazi
+	url = https://github.com/luccahuguet/auto-layout.yazi.git

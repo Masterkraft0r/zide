@@ -13,3 +13,4 @@ layouts/*.kdl
 !layouts/wide.kdl
 !layouts/wide_git.kdl
 tmp/
+result

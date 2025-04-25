@@ -1,7 +1,7 @@
 layout {
     tab hide_floating_panes=true {
         floating_panes {
-            lazygit
+            git_client
             zide_rename
         }
         pane split_direction="horizontal" {
@@ -12,8 +12,8 @@ layout {
     }
 
     // TEMPLATES
-    pane_template name="lazygit" start_suspended=true {
-        command "lazygit"
+    pane_template name="git_client" start_suspended=true {
+        command "$ZIDE_GIT_CLIENT"
         x "10%"
         y "5%"
         width "80%"

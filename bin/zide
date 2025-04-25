@@ -20,6 +20,7 @@ Options:
   -h, --help           Show this help message and exit.
   -p, --picker         File picker to use. Available file pickers are listed in
                        bin/lib. Equivalent to setting ZIDE_FILE_PICKER env var.
+  -g, --git-client     Git client to use (e.g. lazygit, gitui, tig, ...)
   -n, --name           Optional name to give the newly opened session or tab.
                        Will name the session when starting Zide from outside an
                        existing Zellij session, or name a tab if launching from
@@ -73,6 +74,15 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       ;;
+    -g|--git-client)
+      if [[ -n "$2" && "$2" != -* ]]; then
+        git_client="$2"
+        shift 2
+      else
+        echo "Error: --git-client requires a non-empty value."
+        exit 1
+      fi
+      ;;
     -n|--name)
       if [[ -n "$2" && "$2" != -* ]]; then
         name="$2"
@@ -117,6 +127,7 @@ fi
 
 # Export location of the zide project files for further use
 export ZIDE_FILE_PICKER=${picker:-${ZIDE_FILE_PICKER}}
+export ZIDE_GIT_CLIENT=${git_client:-${ZIDE_GIT_CLIENT}}
 export ZIDE_CURRENT_LAYOUT="${layout}"
 export ZIDE_ORIGINAL_EDITOR="${EDITOR}"
 export ZIDE_TAB_NAME="${name}"
@@ -131,6 +142,6 @@ else
   # panes defined in the layout, so instead we'll use pushd to change the working dir before
   # starting zellij, and change it back when we exit
   pushd $cwd > /dev/null
-    zellij --layout "${layout_path}"
+  zellij --layout "${layout_path}"
   popd > /dev/null
 fi

@@ -7,14 +7,14 @@ layout {
         pane stacked=true {
             filepicker name="picker"
             editor expanded=true
-            lazygit
+            git_client
         }
         compact_bar size=1
     }
 
     // TEMPLATES
-    pane_template name="lazygit" start_suspended=true {
-        command "lazygit"
+    pane_template name="git_client" start_suspended=true {
+        command "$ZIDE_GIT_CLIENT"
     }
 
     pane_template name="filepicker" {

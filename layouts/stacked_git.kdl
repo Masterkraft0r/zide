@@ -1,9 +1,8 @@
 layout {
-    tab {
+    tab hide_floating_panes=true {
         floating_panes {
             zide_rename
         }
-
         pane stacked=true {
             filepicker name="picker"
             editor expanded=true
@@ -13,24 +12,26 @@ layout {
     }
 
     // TEMPLATES
-    pane_template name="git_client" start_suspended=true {
-        command "$ZIDE_GIT_CLIENT"
-    }
-
     pane_template name="filepicker" {
-        command "zide-pick"
+        command "${ZIDE_DIR}/bin/zide-pick"
     }
 
     pane_template name="editor" {
         command "$EDITOR"
     }
 
-    pane_template name="compact_bar" {
-        borderless true
+    pane_template name="compact_bar" borderless=true {
         plugin location="compact-bar"
     }
 
-    pane_template name="zide_rename" command="zide-rename" close_on_exit=true
+    pane_template name="zide_rename" close_on_exit=true{
+        command "${ZIDE_DIR}/bin/zide-rename"
+    }
+
+    pane_template name="git_client" {
+        command "$ZIDE_GIT_CLIENT"
+        start_suspended true
+    }
 
     new_tab_template {
         pane

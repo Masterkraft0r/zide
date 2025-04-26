@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Figure out where zide is installed based on where the script lives
+if command -v readlink >/dev/null 2>&1; then
+  script_dir=$(dirname "$(readlink -f "$0")")
+else
+  script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
+fi
+
+export ZIDE_DIR=${ZIDE_DIR:-$(dirname "$script_dir")}
+
 source "${ZIDE_DIR}/bin/lib/getEditorCommand.sh"
 
 read -r -d '' HELP_TEXT << EOF

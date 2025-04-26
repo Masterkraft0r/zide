@@ -7,7 +7,7 @@ else
   script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
 fi
 
-export ZIDE_DIR=$(dirname "$script_dir")
+export ZIDE_DIR=${ZIDE_DIR:-$(dirname "$script_dir")}
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
@@ -136,7 +136,7 @@ export ZIDE_LAYOUT_DIR="${ZIDE_LAYOUT_DIR:-${ZIDE_DIR}/layouts}"
 layout_path="${ZIDE_LAYOUT_DIR}/${layout}"
 if [ -n "$ZELLIJ" ]; then
   zellij action new-tab --cwd $cwd --layout "${layout_path}"
-  zide-rename
+  ${ZIDE_DIR}/bin/zide-rename ${name}
 else
   # There's a bug when using zellij options --default-cwd where the CWD isn't working for floating
   # panes defined in the layout, so instead we'll use pushd to change the working dir before

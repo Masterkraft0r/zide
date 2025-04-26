@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Figure out where zide is installed based on where the script lives
+if command -v readlink >/dev/null 2>&1; then
+  script_dir=$(dirname "$(readlink -f "$0")")
+else
+  script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
+fi
+
+export ZIDE_DIR=${ZIDE_DIR:-$(dirname "$script_dir")}
+
 source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
 
 read -r -d '' HELP_TEXT << EOF
@@ -86,7 +95,7 @@ if ! command -v ${picker} &> /dev/null; then
   exit 1
 fi
 
-envs="EDITOR='zide-edit'"
+envs="EDITOR='${ZIDE_DIR}/bin/zide-edit' ZIDE_DIR='${ZIDE_DIR}'"
 if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
   yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${ZIDE_DIR}/yazi}"
   envs="${envs} YAZI_CONFIG_HOME=${yaziConfigDir}"
